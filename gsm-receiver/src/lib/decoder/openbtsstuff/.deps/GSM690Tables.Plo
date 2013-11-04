@@ -1,0 +1,3 @@
+GSM690Tables.lo: GSM690Tables.cpp GSM690Tables.h
+
+GSM690Tables.h:

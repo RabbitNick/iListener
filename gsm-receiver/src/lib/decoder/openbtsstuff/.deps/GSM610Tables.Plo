@@ -1,0 +1,3 @@
+GSM610Tables.lo: GSM610Tables.cpp GSM610Tables.h
+
+GSM610Tables.h:

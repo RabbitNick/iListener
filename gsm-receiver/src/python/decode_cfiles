@@ -1,0 +1,60 @@
+#!/usr/bin/php
+<?php
+
+// --- init globals
+
+
+$cfile_path="/home/xdxd/20120721_scale_TEST_POWER_WC";
+$call_program="d.py";
+$output_xml="111.xml";
+$output_path="/home/xdxd/tcp-server/trunk";
+
+
+function file_extension($filename) {
+	return end(explode('.', $filename));
+}
+
+function process_cfile($prefix) {
+
+	global $output_xml,$cfile_path,$call_program;
+
+	$dl_filename=$prefix.'_down.cfile';
+	$ul_filename=$prefix.'_up.cfile';
+
+	echo "Processing files: \n".$dl_filename. ", ". $ul_filename." ... \n";
+	$cmd = "./$call_program $cfile_path/$dl_filename $cfile_path/$ul_filename";
+	echo $cmd . "\n";	
+	exec($cmd);
+	
+	$dl_done=$prefix.'_down.done';
+	$ul_done=$prefix.'_up.done';
+	echo "Renaming... \n";
+	exec("mv $dl_filename $dl_done");
+	exec("mv $ul_filename $ul_done");
+
+	$nxml = $prefix . ".xml";
+	
+	exec("mv $output_path/$output_xml $output_path/$nxml");
+	echo "done. \n\n";
+}
+
+
+// main
+if ($handle = opendir($cfile_path)) {
+	while (false !== ($file = readdir($handle))) {
+		if ($file != "." && $file != ".." && file_extension($file) == 'cfile') {
+
+			if (stristr($file, 'down')) {
+				$input_file_prefix=stristr($file, '_', true);
+				process_cfile($input_file_prefix);
+				echo $file  . "\n";
+				
+			}
+
+  		}
+	}
+	closedir($handle);
+}
+
+
+?>

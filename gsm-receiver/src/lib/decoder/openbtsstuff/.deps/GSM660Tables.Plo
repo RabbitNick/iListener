@@ -1,0 +1,3 @@
+GSM660Tables.lo: GSM660Tables.cpp GSM660Tables.h
+
+GSM660Tables.h:

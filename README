@@ -1,0 +1,59 @@
+iListener
+=========
+
+Full Hopping Channels, Uplink and Downlink GSM receiver base on Airprobe
+
+
+The project was started in 2011, and till the end of the project iListener can capture the whole hopping channels.
+(i.e. all the traffic between multi-handsets and BTS together)
+
+And uplink data from handset too.
+
+The output is an XML is the same from gammu by a  Nokia 3310 which can be read by Wireshark.
+
+
+Our project has been closed last year, and now we decide to open the source as it might be useful for someone.
+
+
+
+There are two parts: server and gsm-receiver
+
+
+gsm-receiver is just the gsm-receiver from Airprobe. 
+We modified some codes so it can receive and decode the signals in other channels beside the (FCCH), 
+that's the uplink or hopping traffic. Instead of adjusting the ARFCN on the USRP, we use multi-USRP together 
+in order to capture all the traffic.
+
+Then, it sends to server to rebuild the GSM frames.
+
+
+In the case of multichannels hopping are deployed in the base station, 
+many instands of gsm-receiver are turned on at the same time to recieve the signals.
+
+The theory is, USRP/1 has two channels, we use RX-A to listen the FCCH, 
+the other channels/Uplink channel are in sync with FCCH, we assigns RX-B to listen this channel.
+
+
+Theoretically, futher synchronization can be deployed over many USRP/1 with DBSRX,
+so the hopping channels can be ripidly rised. 
+
+
+
+Also, we've tested "wideband" using one USRP channel, to "cut" the channels Xlating filter in GNURadio. 
+We could successfully decode SMS in 2 hopping channels by wideband using USRP/1. 
+But in pratical, hardware with more bandwidth(e.g. BladeRF) are necesssary.
+
+
+
+For this project, we've produced some USRP/1, DBSRX, RFX boards using Ettus's open PCB file ourselves. 
+Now, there are still around 4 or 5 USRP, 20+DBSRX, 10+RFX remains, 
+we'd like to sell for some fund for a new project. If someone need them, please email us.
+
+
+Nick Chan (Guangxi Normal University)  nick(dot)chitchan(AT)gmail.com
+Wirelessddcat (Guangxi Normal University)  wirelessddcat(AT)gmail.com
+Project Leader: Howard Wong ffp(dot)howard(AT)gmail.com
+
+Special Thanks to Prof. Qin Shao Hua (Guangxi Normal University)
+
+        
